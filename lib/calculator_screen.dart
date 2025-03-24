@@ -16,7 +16,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   String history = "";
   var items = [    
     'Basic',
-    'Scientific',
+
     'Conversion',
    
   ];

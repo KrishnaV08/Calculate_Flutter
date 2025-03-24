@@ -36,7 +36,7 @@ class ConversionState extends State<Conversion> {
     }
   }
 
-  var items = ['Basic', 'Scientific', 'Conversion'];
+  var items = ['Basic',  'Conversion'];
   String select = "Conversion";
 
   var curr1 = ['usd', 'pounds', 'aud', 'euros'];

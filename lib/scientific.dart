@@ -11,7 +11,7 @@ class _ScientificState extends State<Scientific> {
 
   var items = [    
     'Basic',
-    'Scientific',
+
     'Conversion',
    
   ];
