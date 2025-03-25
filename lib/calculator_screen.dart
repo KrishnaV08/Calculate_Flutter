@@ -14,56 +14,74 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   String operand = "";
   String num2 = "";
   String history = "";
-  var items = [    
-    'Basic',
+  var items = ['Basic', 'Conversion'];
 
-    'Conversion',
-   
-  ];
-  String select="Basic";
+  bool isDark = true;
 
+  String select = "Basic";
 
   void handleChange(newValue) {
     setState(() {
-      select=newValue;
+      select = newValue;
     });
     Navigator.pushNamed(context, '/$newValue');
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor:
+          isDark == true
+              ? Colors.black
+              : const Color.fromARGB(255, 255, 255, 255),
+
       appBar: AppBar(
-        
+        backgroundColor: isDark ? Colors.black : Colors.grey,
+
         actions: [
-          
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  isDark = !isDark;
+                });
+              },
+              child: Icon(
+                Icons.bedtime,
+                color: isDark?Colors.deepPurple:Colors.purpleAccent,
+                size: 24.0,
+                // color: isDark?Colors.grey:const Color.fromARGB(255, 101, 101, 101),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: isDark?const Color.fromARGB(255, 139, 139, 139):const Color.fromARGB(255, 92, 92, 92),
+                 ),
+            ),
+          ),
+
           DropdownButton(
             alignment: Alignment.topRight,
-                value: select,
-                // Array list of items
-                items: items.map((String items) {
+            value: select,
+            // Array list of items
+            items:
+                items.map((String items) {
                   return DropdownMenuItem(
                     value: items,
                     // onTap: () => handleSelection(values),
                     child: Text(items),
                   );
                 }).toList(),
-              onChanged: (String? newValue) { 
-                  handleChange(newValue);
-              }
-              
-              ),],
+            onChanged: (String? newValue) {
+              handleChange(newValue);
+            },
+          ),
+        ],
       ),
       body: SafeArea(
         child: Column(
           children: [
-            Container(
-              alignment: Alignment.topLeft,
-              
-            ),
+            Container(alignment: Alignment.topLeft),
             Expanded(
               child: SingleChildScrollView(
                 reverse: true,
@@ -87,9 +105,13 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                   padding: EdgeInsets.all(16),
                   child: Text(
                     "$num1$operand$num2".isEmpty ? "0" : "$num1$operand$num2",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 48,
                       fontWeight: FontWeight.bold,
+                      color:
+                          isDark == true
+                              ? const Color.fromARGB(255, 196, 196, 196)
+                              : const Color.fromARGB(255, 90, 90, 90),
                     ),
                     textAlign: TextAlign.end,
                   ),
@@ -128,18 +150,16 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         num1 = "";
         operand = "";
         num2 = "";
-        history="";
+        history = "";
       });
-    }else if(value=="-" && num1=="" ) {
+    } else if (value == "-" && num1 == "") {
       setState(() {
-        num1+="-";
+        num1 += "-";
       });
-
-    }else if(value=="-" && operand=="×" && num2.isEmpty){
+    } else if (value == "-" && operand == "×" && num2.isEmpty) {
       setState(() {
-        num2+="-";
+        num2 += "-";
       });
-
     } else if (allOp.contains(value) && (num2.isNotEmpty || num1.isEmpty)) {
     } else if (value == "⌫") {
       setState(() {
@@ -153,7 +173,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       });
     } else if (value == "=") {
       setState(() {
-        String temp=num1;
+        String temp = num1;
         if (num2.isEmpty) {
           operand = "";
         } else if (operand == "+") {
@@ -167,12 +187,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         } else if (operand == "%") {
           num1 = (double.parse(num1) % double.parse(num2)).toString();
         }
-        if(num2.isNotEmpty) {
-          history+="$temp$operand$num2\n";
+        if (num2.isNotEmpty) {
+          history += "$temp$operand$num2\n";
         }
         operand = "";
         num2 = "";
-        
       });
     } else if (operand.isEmpty && allNums.contains(value)) {
       setState(() {
@@ -216,10 +235,10 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
   void holdTap(value) {
     setState(() {
-      if(value=="⌫"){
-        num1="";
-        operand="";
-        num2="";
+      if (value == "⌫") {
+        num1 = "";
+        operand = "";
+        num2 = "";
       }
     });
   }
@@ -238,7 +257,14 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           child: Center(
             child: Text(
               value,
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color:
+                    isDark
+                        ? const Color.fromARGB(255, 221, 221, 221)
+                        : const Color.fromARGB(255, 94, 94, 94),
+              ),
             ),
           ),
         ),
@@ -248,7 +274,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
   Color getBtnColor(value) {
     return [Btn.del, Btn.clr, Btn.per].contains(value)
-        ? const Color.fromARGB(255, 129, 129, 129)
+        ? isDark
+            ? const Color.fromARGB(255, 129, 129, 129)
+            : const Color.fromARGB(255, 160, 160, 160)
         : [
           Btn.multiply,
           Btn.subtract,
@@ -256,11 +284,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           Btn.divide,
           Btn.equal,
         ].contains(value)
-        ? Colors.orange
-        : const Color.fromARGB(255, 58, 58, 58);
+        ? isDark
+            ? Colors.orange
+            : const Color.fromARGB(255, 252, 157, 15)
+        : isDark == true
+        ? const Color.fromARGB(255, 58, 58, 58)
+        : const Color.fromARGB(255, 201, 201, 201);
   }
-
-
-  
 }
-

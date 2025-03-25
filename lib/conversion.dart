@@ -17,6 +17,7 @@ class ConversionState extends State<Conversion> {
   String operand = "";
   String num2 = "";
   String history = "";
+  bool isDark=true;
 
   Exchange? rates;
 
@@ -79,11 +80,34 @@ class ConversionState extends State<Conversion> {
     // print(rates?.conversionRates);
 
     return Scaffold(
+      backgroundColor: isDark?Colors.black:const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
         actions: [
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  isDark = !isDark;
+                });
+              },
+              child: Icon(
+                Icons.bedtime,
+                color: isDark?Colors.deepPurple:Colors.purpleAccent,
+                size: 24.0,
+                // color: isDark?Colors.grey:const Color.fromARGB(255, 101, 101, 101),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: isDark?const Color.fromARGB(255, 139, 139, 139):const Color.fromARGB(255, 92, 92, 92),
+                 ),
+            ),
+          ),
+
           DropdownButton(
             alignment: Alignment.topRight,
             value: select,
+            
             // Array list of items
             items:
                 items.map((String items) {
@@ -91,6 +115,7 @@ class ConversionState extends State<Conversion> {
                     value: items,
                     // onTap: () => handleSelection(values),
                     child: Text(items),
+                    
                   );
                 }).toList(),
             onChanged: (String? newValue) {
@@ -111,62 +136,82 @@ class ConversionState extends State<Conversion> {
 
                   // width: screenSize.width,
                   children: [
-                    Column(
-                      children: [
-                        Container(
-                          alignment: Alignment.topCenter,
-                          child: Text(
-                            num1.isEmpty ? "0" : num1,
-                            style: TextStyle(fontSize: 48),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Container(
+                            alignment: Alignment.topCenter,
+                            child: Text(
+                              num1.isEmpty ? "0" : num1,
+                              style: TextStyle(fontSize: 48,
+                                color:
+                            isDark == true
+                                ? const Color.fromARGB(255, 196, 196, 196)
+                                : const Color.fromARGB(255, 90, 90, 90),
+                              
+                              ),
+                              
+                            ),
                           ),
-                        ),
-                        Container(
-                          alignment: Alignment.topCenter,
-                          child: Text(
-                            num2.isEmpty ? "0" : num2,
-                            style: TextStyle(fontSize: 48),
+                          Container(
+                            alignment: Alignment.topCenter,
+                            child: Text(
+                              num2.isEmpty ? "0" : num2,
+                              style: TextStyle(fontSize: 48,
+                              color:
+                            isDark == true
+                                ? const Color.fromARGB(255, 196, 196, 196)
+                                : const Color.fromARGB(255, 90, 90, 90),
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                    Column(
-                      children: [
-                        DropdownButton(
-                          alignment: Alignment.topRight,
-                          value: firstSelect,
-                          hint: Text("Select a currency"),
-                          // Array list of items
-                          items:
-                              rates?.conversionRates.keys.map((String items) {
-                                return DropdownMenuItem(
-                                  value: items,
-                                  // onTap: () => handleSelection(values),
-                                  child: Text(items),
-                                );
-                              }).toList(),
-                          onChanged: (String? newValue) {
-                            firstChage(newValue);
-                          },
-                        ),
-
-                        DropdownButton(
-                          alignment: Alignment.topRight,
-                          value: secondSelect,
-                          hint: Text("Select a currency"),
-                          // Array list of items
-                          items:
-                              rates?.conversionRates.keys.map((String items) {
-                                return DropdownMenuItem(
-                                  value: items,
-                                  // onTap: () => handleSelection(values),
-                                  child: Text(items),
-                                );
-                              }).toList(),
-                          onChanged: (String? newValue) {
-                            secondChange(newValue);
-                          },
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          DropdownButton(
+                            alignment: Alignment.topRight,
+                            value: firstSelect,
+                            hint: Text("Select a currency",style: TextStyle(color: isDark?Colors.grey:const Color.fromARGB(255, 91, 91, 91)),),
+                            style: TextStyle(color: isDark?Colors.grey:const Color.fromARGB(255, 91, 91, 91)),
+                            // Array list of items
+                            items:
+                                rates?.conversionRates.keys.map((String items) {
+                                  return DropdownMenuItem(
+                                    value: items,
+                                    // onTap: () => handleSelection(values),
+                                    child: Text(items,style: TextStyle(color:const Color.fromARGB(255, 212, 212, 212)),),
+                                  );
+                                }).toList(),
+                            onChanged: (String? newValue) {
+                              firstChage(newValue);
+                            },
+                          ),
+                      
+                          DropdownButton(
+                            alignment: Alignment.topRight,
+                            value: secondSelect,
+                            hint: Text("Select a currency",style: TextStyle(color: isDark?Colors.grey:const Color.fromARGB(255, 91, 91, 91)),),
+                            style: TextStyle(color: isDark?Colors.grey:const Color.fromARGB(255, 91, 91, 91)),
+                            // Array list of items
+                            items:
+                                rates?.conversionRates.keys.map((String items) {
+                                  return DropdownMenuItem(
+                                    value: items,
+                                    // onTap: () => handleSelection(values),
+                                    child: Text(items,style: TextStyle(color: const Color.fromARGB(255, 203, 203, 203)),),
+                                  );
+                                }).toList(),
+                            onChanged: (String? newValue) {
+                              secondChange(newValue);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                     Column(
                       children: [
@@ -182,7 +227,13 @@ class ConversionState extends State<Conversion> {
                               handleTap("Enter");
                             });
                           },
-                          child: Text("🔃", style: TextStyle(fontSize: 20)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text("🔃", style: TextStyle(fontSize: 20, color: isDark?Colors.grey:const Color.fromARGB(255, 91, 91, 91))),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                backgroundColor: isDark?const Color.fromARGB(255, 90, 90, 90):const Color.fromARGB(255, 205, 205, 205),
+                 ),
                         ),
                       ],
                     ),
@@ -273,7 +324,12 @@ class ConversionState extends State<Conversion> {
           child: Center(
             child: Text(
               value,
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,
+              color:
+                    isDark
+                        ?  const Color.fromARGB(255, 221, 221, 221)
+                        : value!="RESET" ?const Color.fromARGB(255, 94, 94, 94):const Color.fromARGB(255, 221, 221, 221),
+                        ),
             ),
           ),
         ),
@@ -283,7 +339,9 @@ class ConversionState extends State<Conversion> {
 
   Color getBtnColor(value) {
     return [Btn.del, Btn.clr, Btn.per].contains(value)
-        ? const Color.fromARGB(255, 129, 129, 129)
+        ? isDark
+            ? const Color.fromARGB(255, 129, 129, 129)
+            : const Color.fromARGB(255, 160, 160, 160)
         : [
           Btn.multiply,
           Btn.subtract,
@@ -292,9 +350,13 @@ class ConversionState extends State<Conversion> {
           Btn.equal,
           "Enter",
         ].contains(value)
-        ? Colors.orange
+        ? isDark
+            ? Colors.orange
+            : const Color.fromARGB(255, 252, 157, 15)
         : value == "RESET"
-        ? const Color.fromARGB(255, 255, 58, 58)
-        : const Color.fromARGB(255, 58, 58, 58);
+        ? isDark? const Color.fromARGB(255, 255, 58, 58):const Color.fromARGB(255, 255, 60, 60)
+        : isDark == true
+        ? const Color.fromARGB(255, 58, 58, 58)
+        : const Color.fromARGB(255, 201, 201, 201);
   }
 }

@@ -28,15 +28,31 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
+
+    ImageProvider<Object> imgsrc= AssetImage('assets/imgs.png');
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 66, 66, 66),
       
 
-      body:  Center(child: ElevatedButton(
-        child: Text("Basic Calculator"),
-        onPressed:() { 
-          Navigator.pushNamed(context, "/Basic");
-          }),
+      body:  Padding(
+        padding: const EdgeInsets.only(top: 240),
+        child: Center(
+          
+          child: Column(children:[ 
+            FadeInImage(placeholder: imgsrc,
+            image: imgsrc,height: 80,width: 80,),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: ElevatedButton(
+              
+              child: Text("Basic Calculator"),
+              onPressed:() { 
+                Navigator.pushNamed(context, "/Basic");
+                }),
+            ),]
+            ),
         ),
+      ),
     );
   }
 }
