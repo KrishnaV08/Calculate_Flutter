@@ -185,7 +185,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         } else if (operand == "÷") {
           num1 = (double.parse(num1) / double.parse(num2)).toString();
         } else if (operand == "%") {
-          num1 = (double.parse(num1) % double.parse(num2)).toString();
+          num1 = (double.parse(num1)/(100) *double.parse(num2)).toString();
         }
         if (num2.isNotEmpty) {
           history += "$temp$operand$num2\n";

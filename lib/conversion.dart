@@ -14,9 +14,9 @@ class Conversion extends StatefulWidget {
 
 class ConversionState extends State<Conversion> {
   String num1 = "";
-  String operand = "";
+
   String num2 = "";
-  String history = "";
+
   bool isDark=true;
 
   Exchange? rates;
@@ -40,7 +40,7 @@ class ConversionState extends State<Conversion> {
   var items = ['Basic',  'Conversion'];
   String select = "Conversion";
 
-  var curr1 = ['usd', 'pounds', 'aud', 'euros'];
+
   String first = "usd";
   String second = "usd";
 
