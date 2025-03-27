@@ -19,6 +19,8 @@ class ConversionState extends State<Conversion> {
 
   bool isDark = true;
 
+  // DateTime parsedDate = DateFormat("EEE. d MMM y HH:mm:ss Z").parse(rates?.timeLastUpdateUtc);
+
   Exchange? rates;
 
   var isLoaded = false;
@@ -37,7 +39,7 @@ class ConversionState extends State<Conversion> {
     }
   }
 
-  var items = ['Basic', 'Conversion'];
+  var items = ['Conversion', 'Basic'];
   String select = "Conversion";
 
   String first = "usd";
@@ -81,6 +83,7 @@ class ConversionState extends State<Conversion> {
     // print(rates?.conversionRates);
 
     return Scaffold(
+      
       backgroundColor:
           isDark ? Colors.black : const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -128,11 +131,33 @@ class ConversionState extends State<Conversion> {
           ),
         ],
       ),
+
+
+
+
       body: SafeArea(
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(48.0),
+              padding: const EdgeInsets.only(top:18.0),
+              
+              child: Text(
+                rates?.timeLastUpdateUtc== null? "Loading Date..." : "Date: ${(rates?.timeLastUpdateUtc as String).substring(0, (rates?.timeLastUpdateUtc as String).length - 14)}",
+                style: TextStyle(
+                  color:  isDark == true
+                                          ? const Color.fromARGB(
+                                            255,
+                                            196,
+                                            196,
+                                            196,
+                                          )
+                                          : const Color.fromARGB(255, 90, 90, 90),
+                                          fontWeight: FontWeight.bold,
+                ),
+              )
+            ),
+            Padding(
+              padding: const EdgeInsets.all(38.0),
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Row(
@@ -293,6 +318,7 @@ class ConversionState extends State<Conversion> {
                               "🔃",
                               style: TextStyle(
                                 fontSize: 20,
+                                fontWeight: FontWeight.bold,
                                 color:
                                     isDark
                                         ? Colors.grey
@@ -304,7 +330,7 @@ class ConversionState extends State<Conversion> {
                             backgroundColor:
                                 isDark
                                     ? const Color.fromARGB(255, 90, 90, 90)
-                                    : const Color.fromARGB(255, 205, 205, 205),
+                                    : Colors.grey,
                           ),
                         ),
                       ],
