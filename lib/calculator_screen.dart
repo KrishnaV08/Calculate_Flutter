@@ -21,10 +21,12 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   String select = "Basic";
 
   void handleChange(newValue) {
-    setState(() {
-      select = newValue;
-    });
-    Navigator.pushNamed(context, '/$newValue');
+    if (newValue != select) {
+      setState(() {
+        select = newValue;
+      });
+      Navigator.pushNamed(context, '/$newValue');
+    }
   }
 
   @override
@@ -50,13 +52,16 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
               },
               child: Icon(
                 Icons.bedtime,
-                color: isDark?Colors.deepPurple:Colors.purpleAccent,
+                color: isDark ? Colors.deepPurple : Colors.purpleAccent,
                 size: 24.0,
                 // color: isDark?Colors.grey:const Color.fromARGB(255, 101, 101, 101),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: isDark?const Color.fromARGB(255, 139, 139, 139):const Color.fromARGB(255, 92, 92, 92),
-                 ),
+                backgroundColor:
+                    isDark
+                        ? const Color.fromARGB(255, 139, 139, 139)
+                        : const Color.fromARGB(255, 92, 92, 92),
+              ),
             ),
           ),
 
@@ -177,15 +182,16 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         if (num2.isEmpty) {
           operand = "";
         } else if (operand == "+") {
-          num1 = (double.parse(num1) + double.parse(num2)).toString();
+          num1 = (double.parse(num1) + double.parse(num2)).toStringAsFixed(2);
         } else if (operand == "-") {
-          num1 = (double.parse(num1) - double.parse(num2)).toString();
+          num1 = (double.parse(num1) - double.parse(num2)).toStringAsFixed(2);
         } else if (operand == "×") {
-          num1 = (double.parse(num1) * double.parse(num2)).toString();
+          num1 = (double.parse(num1) * double.parse(num2)).toStringAsFixed(2);
         } else if (operand == "÷") {
-          num1 = (double.parse(num1) / double.parse(num2)).toString();
+          num1 = (double.parse(num1) / double.parse(num2)).toStringAsFixed(2);
         } else if (operand == "%") {
-          num1 = (double.parse(num1)/(100) *double.parse(num2)).toString();
+          num1 = (double.parse(num1) / (100) * double.parse(num2))
+              .toStringAsFixed(2);
         }
         if (num2.isNotEmpty) {
           history += "$temp$operand$num2\n";
